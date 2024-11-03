@@ -1,0 +1,523 @@
+<!--<!DOCTYPE HTML>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    &lt;!&ndash; Required meta tags &ndash;&gt;-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">-->
+
+<!--    <title>Admin Dashboard</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--             background-color: #ffffff; /* Light background for the body */-->
+<!--             font-family: Arial, sans-serif; /* Font family */-->
+<!--             margin: 0; /* Remove default margin */-->
+<!--         }-->
+
+<!--         header {-->
+<!--             background-color: #1abc9c; /* Dark background for header */-->
+<!--             color: #ffffff; /* White text for header */-->
+<!--             padding: 10px 0; /* Padding for header */-->
+<!--         }-->
+
+<!--         .header-container {-->
+<!--             display: flex; /* Use flexbox for layout */-->
+<!--             justify-content: space-between; /* Space between items */-->
+<!--             align-items: center; /* Center align items vertically */-->
+<!--             padding: 0 20px; /* Padding on left and right */-->
+<!--         }-->
+
+<!--         #logo {-->
+<!--             font-size: 1.5rem; /* Font size for logo */-->
+<!--             font-weight: bold; /* Bold text for logo */-->
+<!--             color: yellow;-->
+<!--         }-->
+
+<!--         .navigation-menu {-->
+<!--             list-style: none; /* Remove bullet points */-->
+<!--             padding: 0; /* Remove padding */-->
+<!--             display: flex; /* Flexbox for horizontal layout */-->
+<!--             justify-content: center; /* Center align menu items */-->
+<!--             margin: 0; /* Remove margin */-->
+<!--         }-->
+
+<!--         .navigation-menu li {-->
+<!--             margin: 0 15px; /* Space between menu items */-->
+<!--         }-->
+
+<!--         .navigation-menu a {-->
+<!--             color: #ffffff; /* White text for links */-->
+<!--             text-decoration: none; /* No underline */-->
+<!--             font-weight: bold; /* Bold text for links */-->
+<!--         }-->
+
+<!--         .navigation-menu a:hover {-->
+<!--             text-decoration: underline; /* Underline on hover */-->
+<!--         }-->
+
+<!--         .profile-icon {-->
+<!--             width: 40px; /* Width of the profile icon */-->
+<!--             height: 40px; /* Height of the profile icon */-->
+<!--             border-radius: 50%; /* Circular profile icon */-->
+<!--             margin-right: 10px; /* Space between icon and text */-->
+<!--         }-->
+
+<!--         .container {-->
+<!--             margin-top: 20px; /* Space above the container */-->
+<!--             padding: 20px; /* Padding for container */-->
+<!--             background-color: #ffffff; /* White background for container */-->
+<!--             border-radius: 8px; /* Rounded corners */-->
+<!--             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */-->
+<!--         }-->
+
+<!--         .btn-primary {-->
+<!--             background-color: #007bff; /* Primary button color */-->
+<!--             border: none; /* No border */-->
+<!--         }-->
+
+<!--         .btn-primary:hover {-->
+<!--             background-color: #0056b3; /* Darker shade on hover */-->
+<!--         }-->
+
+<!--         .btn-warning {-->
+<!--             background-color: #ffc107; /* Warning button color */-->
+<!--             border: none; /* No border */-->
+<!--         }-->
+
+<!--         .btn-warning:hover {-->
+<!--             background-color: #e0a800; /* Darker shade on hover */-->
+<!--         }-->
+
+<!--         .btn-danger {-->
+<!--             background-color: #dc3545; /* Danger button color */-->
+<!--             border: none; /* No border */-->
+<!--         }-->
+
+<!--         .btn-danger:hover {-->
+<!--             background-color: #c82333; /* Darker shade on hover */-->
+<!--         }-->
+<!--    </style>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<header>-->
+<!--    <div class="header-container">-->
+<!--        <div id="logo">-->
+<!--            <span id="logo-text">LW Furniture | Admin Dashboard</span>-->
+<!--        </div>-->
+<!--        <ul class="navigation-menu">-->
+<!--            <li><a th:href="@{/admin}" id="user-management-link">User Management</a></li>-->
+<!--        </ul>-->
+<!--        <div class="ms-auto d-flex align-items-center">-->
+<!--            <select id="language-select" class="form-select" aria-label="Language select">-->
+<!--                <option value="en">English</option>-->
+<!--                <option value="fr">Français</option>-->
+<!--                <option value="es">Español</option>-->
+<!--            </select>-->
+<!--            <a th:href="@{/user/profile}" class="d-flex align-items-center me-3">-->
+<!--                <img src="path/to/profile-picture.jpg" alt="Profile" class="profile-icon"> &lt;!&ndash; Replace with actual image path &ndash;&gt;-->
+<!--            </a>-->
+<!--            <a th:href="@{/logout}" class="btn btn-danger">Logout</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--<div class="container mt-4">-->
+<!--    <h3 id="user-management-title">User Management</h3>-->
+<!--    <hr>-->
+<!--    <div class="mb-3">-->
+<!--        <a th:href="@{/admin/add}" class="btn btn-primary" id="add-user-button">Add New User</a>-->
+<!--        <a th:href="@{/admin/search}" class="btn btn-primary" id="search-user-button">Search User</a>-->
+<!--        <a th:href="@{/admin/download/users}" class="btn btn-success" id="download-data-button">Download Data</a>-->
+<!--        <a th:href="@{/admin/upload/furniture}" class="btn btn-success" id="upload-data-button">Upload Data</a>-->
+<!--    </div>-->
+<!--    <table class="table table-bordered table-striped">-->
+<!--        <thead class="table-dark">-->
+<!--        <tr>-->
+<!--            <th><a th:href="@{/admin(sortBy='username', pageNo=${currentPage}, pageSize=${pageSize})}" id="username-header">Username</a></th>-->
+<!--            <th><a th:href="@{/admin(sortBy='firstName', pageNo=${currentPage}, pageSize=${pageSize})}" id="first-name-header">First Name</a></th>-->
+<!--            <th><a th:href="@{/admin(sortBy='lastName', pageNo=${currentPage}, pageSize=${pageSize})}" id="last-name-header">Last Name</a></th>-->
+<!--            <th><a th:href="@{/admin(sortBy='email', pageNo=${currentPage}, pageSize=${pageSize})}" id="email-header">Email</a></th>-->
+<!--            <th><a th:href="@{/admin(sortBy='phoneNumber', pageNo=${currentPage}, pageSize=${pageSize})}" id="phone-number-header">Phone Number</a></th>-->
+<!--            <th>Profile Picture</th>-->
+<!--            <th><a th:href="@{/admin(sortBy='role', pageNo=${currentPage}, pageSize=${pageSize})}" id="role-header">Role</a></th>-->
+<!--            <th>Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+
+<!--        <tbody>-->
+<!--        <tr th:each="user : ${users}">-->
+<!--            <td th:text="${user.username}"></td>-->
+<!--            <td th:text="${user.firstName}"></td>-->
+<!--            <td th:text="${user.lastName}"></td>-->
+<!--            <td th:text="${user.email}"></td>-->
+<!--            <td th:text="${user.phoneNumber}"></td>-->
+<!--            <td><img th:src="${user.profilePicture}" alt="Profile Picture" width="40" height="40"></td>-->
+<!--            <td th:text="${user.role}"></td>-->
+<!--            <td>-->
+<!--                <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-warning btn-sm" id="edit-button">Edit</a>-->
+<!--                <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">-->
+<!--                    <button type="submit" class="btn btn-danger btn-sm" id="delete-button">Delete</button>-->
+<!--                </form>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+<!--    &lt;!&ndash; Pagination Controls &ndash;&gt;-->
+<!--    <nav aria-label="Page navigation">-->
+<!--        <ul class="pagination justify-content-center">-->
+<!--            <li class ="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">-->
+<!--                <a class="page-link" th:href="@{/admin(pageNo=${currentPage - 1}, pageSize=${pageSize})}">Previous</a>-->
+<!--            </li>-->
+<!--            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i} ? 'active' : ''">-->
+<!--                <a class="page-link" th:href="@{/admin(pageNo=${i}, pageSize=${pageSize})}" th:text="${i + 1}"></a>-->
+<!--            </li>-->
+<!--            <li class ="page-item" th:classappend="${currentPage + 1 == totalPages} ? 'disabled' : ''">-->
+<!--                <a class="page-link" th:href="@{/admin(pageNo=${currentPage + 1}, pageSize=${pageSize})}">Next</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    const translations = {-->
+<!--        en: {-->
+<!--            userManagement: "User Management",-->
+<!--            addUser: "Add New User",-->
+<!--            searchUser: "Search User",-->
+<!--            downloadData: "Download Data",-->
+<!--            uploadData: "Upload Data",-->
+<!--            username: "Username",-->
+<!--            firstName: "First Name",-->
+<!--            lastName: "Last Name",-->
+<!--            email: "Email",-->
+<!--            phoneNumber: "Phone Number",-->
+<!--            role: "Role",-->
+<!--            edit: "Edit",-->
+<!--            delete: "Delete"-->
+<!--        },-->
+<!--        fr: {-->
+<!--            userManagement: "Gestion des utilisateurs",-->
+<!--            addUser: "Ajouter un nouvel utilisateur",-->
+<!--            searchUser: "Rechercher un utilisateur",-->
+<!--            downloadData: "Télécharger les données",-->
+<!--            uploadData: "Télécharger les données",-->
+<!--            username: "Nom d'utilisateur",-->
+<!--            firstName: "Prénom",-->
+<!--            lastName: "Nom",-->
+<!--            email: "Email",-->
+<!--            phoneNumber: "Numéro de téléphone",-->
+<!--            role: "Rôle",-->
+<!--            edit: "Modifier",-->
+<!--            delete: "Supprimer"-->
+<!--        },-->
+<!--        es: {-->
+<!--            userManagement: "Gestión de usuarios",-->
+<!--            addUser: "Agregar nuevo usuario",-->
+<!--            searchUser: "Buscar usuario",-->
+<!--            downloadData: "Descargar datos",-->
+<!--            uploadData: "Subir datos",-->
+<!--            username: "Nombre de usuario",-->
+<!--            firstName: "Nombre",-->
+<!--            lastName: "Apellido",-->
+<!--            email: "Correo electrónico",-->
+<!--            phoneNumber: "Número de teléfono",-->
+<!--            role: "Rol",-->
+<!--            edit: "Editar",-->
+<!--            delete: "Eliminar"-->
+<!--        }-->
+<!--    };-->
+
+<!--    function changeLanguage(lang) {-->
+<!--        document.getElementById('user-management-title').textContent = translations[lang].userManagement;-->
+<!--        document.getElementById('add-user-button').textContent = translations[lang].addUser;-->
+<!--        document.getElementById('search-user-button').textContent = translations[lang].searchUser;-->
+<!--        document.getElementById('download-data-button').textContent = translations[lang].downloadData;-->
+<!--        document.getElementById('upload-data-button').textContent = translations[lang].uploadData;-->
+<!--        document.getElementById('username-header').textContent = translations[lang].username;-->
+<!--        document.getElementById('first-name-header').textContent = translations[lang].firstName;-->
+<!--        document.getElementById('last-name-header').textContent = translations[lang].lastName;-->
+<!--        document.getElementById('email-header').textContent = translations[lang].email;-->
+<!--        document.getElementById('phone-number-header').textContent = translations[lang].phoneNumber;-->
+<!--        document.getElementById('role-header').textContent = translations[lang].role;-->
+<!--        const editButtons = document.querySelectorAll('#edit-button');-->
+<!--        const deleteButtons = document.querySelectorAll('#delete-button');-->
+<!--        editButtons.forEach(button => button.textContent = translations[lang].edit);-->
+<!--        deleteButtons.forEach(button => button.textContent = translations[lang].delete);-->
+<!--    }-->
+
+<!--    document.getElementById('language-select').addEventListener('change', function() {-->
+<!--        changeLanguage(this.value);-->
+<!--    });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin Dashboard</title>
+
+    <style>
+        body {
+          background-color: #0c2136;
+          font-family: Arial, sans-serif;
+          margin: 0;
+        }
+
+        header {
+          background-color: #145485;
+          color: #ffffff;
+          padding: 10px 0;
+        }
+
+        .header-container {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          padding: 0 20px;
+        }
+
+        .navigation-menu {
+          list-style: none;
+          padding: 0;
+          display: flex;
+          margin: 0;
+        }
+
+        .navigation-menu a {
+          color: #ffffff;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        .profile-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
+
+        .container {
+          margin-top: 20px;
+          padding: 20px;
+          background-color: #ffffff;
+          border-radius: 8px;
+          width: 80%; /* Adjusted container width */
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .btn {
+          font-size: 14px;
+          font-weight: bold;
+          padding: 10px;
+          border-radius: 20px;
+          transition: transform 0.2s;
+        }
+
+        .btn:hover {
+          transform: scale(1.05);
+        }
+
+        .btn-primary {
+          background-color: #007bff;
+          border: none;
+        }
+
+        .btn-primary:hover {
+          background-color: #0056b3;
+        }
+
+        .btn-success {
+          background-color: #28a745;
+          border: none;
+        }
+
+        .btn-success:hover {
+          background-color: #218838;
+        }
+
+        .btn-warning {
+          background-color: #ffc107;
+          border: none;
+        }
+
+        .btn-warning:hover {
+          background-color: #e0a800;
+        }
+
+        .btn-danger {
+          background-color: #dc3545;
+          border: none;
+        }
+
+        .btn-danger:hover {
+          background-color: #c82333;
+        }
+
+        .table-container {
+          display: flex;
+          align-items: flex-start;
+          margin-top: 20px;
+        }
+
+        table {
+          width: 450px; /* Reduced table width */
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          overflow: hidden;
+          font-size: 13px;
+          margin-left: 10px;
+        }
+
+        .table td,
+        .table th {
+          padding: 6px; /* Further reduced padding */
+        }
+
+        .table thead {
+          background-color: #145485;
+          color: #ffffff;
+        }
+
+        .pagination {
+          justify-content: center;
+        }
+
+        .action-buttons {
+          display: flex;
+          gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-container">
+        <ul class="navigation-menu">
+            <li><a th:href="@{/admin}">User Management</a></li>
+        </ul>
+        <div class="ms-auto d-flex align-items-center">
+            <a th:href="@{/user/profile}" class="d-flex align-items-center me-3">
+                <img src="path/to/profile-picture.jpg" alt="Profile" class="profile-icon">
+            </a>
+            <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-4">
+    <h3>User Management</h3>
+    <hr>
+    <div class="table-container">
+        <div class="sidebar-buttons">
+            <a th:href="@{/admin/add}" class="btn btn-primary">Add New User</a>
+            <a th:href="@{/admin/search}" class="btn btn-primary">Search User</a>
+            <a th:href="@{/admin/download/users}" class="btn btn-success">Download Data</a>
+            <a th:href="@{/admin/upload}" class="btn btn-success">Upload Data</a>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th><a th:href="@{/admin(sortBy='username')}">Username</a></th>
+                <th><a th:href="@{/admin(sortBy='firstName')}">First Name</a></th>
+                <th><a th:href="@{/admin(sortBy='lastName')}">Last Name</a></th>
+                <th><a th:href="@{/admin(sortBy='email')}">Email</a></th>
+                <th><a th:href="@{/admin(sortBy='phoneNumber')}">Phone Number</a></th>
+                <th>Profile Picture</th>
+                <th><a th:href="@{/admin(sortBy='role')}">Role</a></th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.phoneNumber}"></td>
+                <td><img th:src="${user.profilePicture}" alt="Profile Picture" width="30" height="30"></td>
+                <td th:text="${user.role}"></td>
+                <td class="action-buttons">
+                    <a th:href="@{/admin/users/edit/{id}(id=${user.id})}" class="btn btn-warning btn-sm">Edit</a>
+                    <form th:action="@{/admin/users/delete/{id}(id=${user.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <form id="send-notification-form">
+            <input type="text" name="title" placeholder="Notification Title" required>
+            <textarea name="message" placeholder="Message" required></textarea>
+            <button type="button" onclick="sendNotification()">Send Notification</button>
+        </form>
+    </div>
+
+    <!-- Pagination Controls -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{/admin(pageNo=${currentPage - 1})}">Previous</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i} ? 'active' : ''">
+                <a class="page-link" th:href="@{/admin(pageNo=${i})}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{/admin(pageNo=${currentPage + 1})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<script>
+    async function fetchNotifications() {
+     const response = await fetch('/notifications/unread');
+     const notifications = await response.json();
+     const listDiv = document.getElementById('notification-list');
+     listDiv.innerHTML = ''; // Clear previous notifications
+     notifications.forEach(notification => {
+         listDiv.innerHTML += <div>${notification.title}: ${notification.message} <button onclick="markAsRead(${notification.id})">Mark as Read</button></div>;
+     });
+     listDiv.style.display = 'block';
+  }
+
+  async function sendNotification() {
+     const form = document.getElementById('send-notification-form');
+     const formData = new FormData(form);
+     await fetch('/notifications/send', {
+         method: 'POST',
+         body: new URLSearchParams(formData)
+     });
+     alert('Notification sent successfully!');
+  }
+
+  async function markAsRead(id) {
+     await fetch(/notifications/mark-as-read/${id}, { method: 'PUT' });
+     fetchNotifications(); // Refresh list after marking as read
+  }
+
+</script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,22 @@
+package com.schoolmgt.schoolmaterialmgt;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SchoolmaterialmgtApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SchoolmaterialmgtApplication.class, args);
+
+
+
+
+
+
+
+
+
+	}
+
+}
